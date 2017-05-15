@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Konfiguration kann mit scan="true" jede Minute aktualisiert werden 
+    http://logback.qos.ch/manual/configuration.html#autoScan
+-->
+<configuration scan="true">
+
+    <include resource="org/springframework/boot/logging/logback/base.xml"/>
+    
+</configuration>

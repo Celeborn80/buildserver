@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Buildserver</title>
+</head>
+<body>
+  <div class="container">
+    <div class="page-header">
+      <h1>Build-Liste</h1>
+    </div>
+    <h2>Aktive Builds</h2>
+    <div class="alert alert-info" role="alert" data-ng-hide="ctrl.builds.length > 0">Es gibt keine aktiven Builds.</div>
+    <div data-ng-show="ctrl.builds.length > 0">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Buildnummer</th>
+            <th>Job</th>
+            <th>Gestartet</th>
+          </tr>
+        </thead>
+        <tr data-ng-repeat="build in ctrl.builds" class="slide">
+          <td data-ng-bind="build.buildNumber"></td>
+          <td data-ng-bind="build.job.name"></td>
+          <td data-ng-bind="build.started"></td>
+          <td>
+            <button class="btn btn-primary" data-ng-click="ctrl.showSelectedBuild(build)">Anzeigen</button>
+          </td>
+          <td>
+            <button class="btn btn-danger" data-ng-click="ctrl.cancelBuild(build.buildNumber)">Beenden</button>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <div data-ng-show="ctrl.selectedBuild">
+      <h3>{{ctrl.selectedBuild.job.name}}</h3>
+      <pre data-ng-bind="ctrl.selectedBuildOutput"></pre>
+    </div>
+    <h2>Warteschlange</h2>
+    <div class="alert alert-info" role="alert" data-ng-hide="ctrl.buildRequest.length > 0">Es gibt keine Builds in der Warteschlange.</div>
+    <div data-ng-show="ctrl.buildRequest.length > 0">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Job</th>
+          </tr>
+        </thead>
+        <tr data-ng-repeat="request in ctrl.buildRequest">
+          <td data-ng-bind="$index + 1"></td>
+          <td data-ng-bind="request.name"></td>
+        </tr>
+      </table>
+    </div>
+    <h2>Jobs</h2>
+    <div class="alert alert-info" role="alert" data-ng-hide="ctrl.buildJobs.length > 0">Es sind keine Jobs definiert.</div>
+    <div data-ng-show="ctrl.buildJobs.length > 0">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Befehlszeile</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tr data-ng-animate="'animate'" data-ng-repeat="job in ctrl.buildJobs">
+          <td data-ng-bind="::job.name"></td>
+          <td data-ng-bind="::job.command"></td>
+          <td>
+            <button class="btn btn-primary" data-ng-click="ctrl.runJob(job.id)">Start</button>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <h2>Historie</h2>
+    <div>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Buildnummer</th>
+            <th>Job</th>
+            <th>Gestartet</th>
+            <th></th>
+            <th></th>
+          </tr>
+        </thead>
+        <tr data-ng-repeat="history in ctrl.buildHistory">
+          <td data-ng-bind="::history.buildNumber"></td>
+          <td data-ng-bind="::history.job.name"></td>
+          <td data-ng-bind="::history.started"></td>
+          <td>
+            <button data-ng-show="::history.result==0" class="btn btn-success">Erfolgreich</button>
+            <button data-ng-show="::history.result==1" class="btn btn-danger">Abgebrochen</button>
+          </td>
+          <td>
+            <button data-ng-click="ctrl.showDetails(history.buildNumber)" class="btn btn-primary">Details</button>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</body>
+</html>

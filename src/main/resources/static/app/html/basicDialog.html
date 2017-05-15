@@ -1,0 +1,18 @@
+<div class="dt-dialog" id="{{ctrl.config.id}}">
+  <div class="dialog-titlebar">
+    <div class="dialog-titlebar-title" data-ng-bind="ctrl.config.title"></div>
+    <div class="dialog-titlebar-fill" target=".modal-content"></div>
+  </div>
+  <div class="dt-dialog-content">
+    <pre data-ng-bind="ctrl.config.data.text"></pre>
+  </div>
+  <div class="dt-dialog-content">
+    <div class="clear"></div>
+    <hr>
+    <div class="dialog-footer">
+      <button class="{{button.cssClass}}" data-ng-attr-title="{{ button.title || button.name }}" data-ng-bind="button.name"
+        data-ng-click="button.func()" data-ng-repeat="button in ctrl.config.buttons"></button>
+    </div>
+    <div class="clear"></div>
+  </div>
+</div>

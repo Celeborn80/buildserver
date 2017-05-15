@@ -1,0 +1,41 @@
+.animate-enter, .animate-leave {
+	-webkit-transition: 925ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+	-moz-transition: 925ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+	-ms-transition: 925ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+	-o-transition: 925ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+	transition: 925ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+	position: relative;
+	display: block;
+}
+
+.animate-enter.animate-enter-active, .animate-leave {
+	opacity: 1;
+	top: 0;
+	height: 30px;
+}
+
+.animate-leave.animate-leave-active, .animate-enter {
+	opacity: 0;
+	top: -50px;
+	height: 0px;
+}
+
+/* * /
+
+.box {
+  margin: 20px auto;
+  background: #5FCF80;
+  width: 150px;
+  height: 150px;
+}
+.circle {
+  transform: rotate(360deg);
+  background: #9351A6;
+  border-radius: 50%;
+  margin: 20px auto;
+  width: 150px;
+  height: 150px;
+}
+.rotate {
+  transition: all 1s ease-in-out;
+}
