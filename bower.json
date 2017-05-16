@@ -4,11 +4,14 @@
     "angular": "~1.6.0",
     "angular-animate": "~1.6.0",
     "angular-resource": "~1.6.0",
+    "angularjs-toaster": "0.4.15",
     "angular-bootstrap": "~2.5.0",
     "bootstrap-css-only": "~3.3.0",
+    "sockjs-client": "~1.1.4",
+    "stomp-websocket": "~2.3.0",
     "lodash": "~4.17.4"
   },
   "resolutions": {
-    "angular": "1.6.4"
+    "angular": "~1.6.4"
   }
 }

@@ -1,8 +1,9 @@
-package de.data_team.build;
+package de.data_team.build.service;
 
 import java.util.List;
 import java.util.Map;
 
+import de.data_team.build.controller.BuildsListController;
 import de.data_team.build.model.Build;
 import de.data_team.build.model.BuildHistory;
 import de.data_team.build.model.Job;
@@ -28,5 +29,7 @@ public interface BuildService {
     void runBuild(String jobName);
 
     BuildHistory getBuildHistory(Long buildNumber);
+
+    BuildsListController getBuildsListController();
 
 }

@@ -1,4 +1,4 @@
-package de.data_team.build;
+package de.data_team.build.service;
 
 import java.util.concurrent.TimeUnit;
 
@@ -45,6 +45,7 @@ public class BuildTask implements Runnable {
                             protected void processLine(final String line) {
                                 build.getExecutionOutput().append(line);
                                 build.getExecutionOutput().append(System.lineSeparator());
+                                buildService.getBuildsListController().triggerUpdated(build);
                             }
                         }).start();
                 while (startedProcess.getProcess().isAlive()) {

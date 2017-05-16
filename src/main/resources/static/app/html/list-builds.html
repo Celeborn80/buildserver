@@ -6,12 +6,16 @@
 </head>
 <body>
   <div class="container">
+    <toaster-container></toaster-container>
+    <div>
+      <button class="btn btn-primary" data-ng-click="ctrl.toggleWebSocketDebug()">WebSocket-Debug</button>
+    </div>
     <div class="page-header">
-      <h1>Build-Liste</h1>
+      <h1>Build-Server</h1>
     </div>
     <h2>Aktive Builds</h2>
-    <div class="alert alert-info" role="alert" data-ng-hide="ctrl.builds.length > 0">Es gibt keine aktiven Builds.</div>
-    <div data-ng-show="ctrl.builds.length > 0">
+    <div class="alert alert-info" role="alert" data-ng-hide="ctrl.buildSize > 0">Es gibt keine aktiven Builds.</div>
+    <div data-ng-show="ctrl.buildSize > 0">
       <table class="table table-striped">
         <thead>
           <tr>
@@ -20,22 +24,22 @@
             <th>Gestartet</th>
           </tr>
         </thead>
-        <tr data-ng-repeat="build in ctrl.builds" class="slide">
-          <td data-ng-bind="build.buildNumber"></td>
-          <td data-ng-bind="build.job.name"></td>
-          <td data-ng-bind="build.started"></td>
+        <tr data-ng-repeat="(buildNumber, build) in ctrl.builds" class="slide">
+          <td data-ng-bind="::buildNumber"></td>
+          <td data-ng-bind="::build.job.name"></td>
+          <td data-ng-bind="::build.started"></td>
           <td>
-            <button class="btn btn-primary" data-ng-click="ctrl.showSelectedBuild(build)">Anzeigen</button>
+            <button class="btn btn-primary" data-ng-click="ctrl.showSelectedBuild(buildNumber)">Anzeigen</button>
           </td>
           <td>
-            <button class="btn btn-danger" data-ng-click="ctrl.cancelBuild(build.buildNumber)">Beenden</button>
+            <button class="btn btn-danger" data-ng-click="ctrl.cancelBuild(buildNumber)">Beenden</button>
           </td>
         </tr>
       </table>
     </div>
     <div data-ng-show="ctrl.selectedBuild">
       <h3>{{ctrl.selectedBuild.job.name}}</h3>
-      <pre data-ng-bind="ctrl.selectedBuildOutput"></pre>
+      <pre data-ng-bind="ctrl.selectedBuild.currentExecutionOutput"></pre>
     </div>
     <h2>Warteschlange</h2>
     <div class="alert alert-info" role="alert" data-ng-hide="ctrl.buildRequest.length > 0">Es gibt keine Builds in der Warteschlange.</div>

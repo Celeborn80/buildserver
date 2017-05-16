@@ -1,4 +1,4 @@
-package de.data_team.build;
+package de.data_team.build.service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -18,9 +18,11 @@ import org.springframework.core.task.AsyncTaskExecutor;
 import org.springframework.core.task.SimpleAsyncTaskExecutor;
 import org.springframework.stereotype.Service;
 
+import de.data_team.build.controller.BuildsListController;
 import de.data_team.build.jpa.DataService;
 import de.data_team.build.model.Build;
 import de.data_team.build.model.BuildHistory;
+import de.data_team.build.model.BuildNumberSequence;
 import de.data_team.build.model.Job;
 import lombok.extern.slf4j.Slf4j;
 
@@ -37,6 +39,9 @@ public class BuildServiceImpl implements BuildService {
     private List<Job> commandList = new ArrayList<>();
 
     private final BuildNumberSequence sequence = new BuildNumberSequence();
+
+    @Autowired
+    private BuildsListController buildsListController;
 
     @Autowired
     private DataService dataService;
@@ -61,6 +66,7 @@ public class BuildServiceImpl implements BuildService {
             final Job job = findJob.get();
             if (hasActiveBuildTask(job.getId())) {
                 buildRequests.add(job);
+                buildsListController.triggerRequest(listBuildRequests());
             } else {
                 startBuild(job);
             }
@@ -87,6 +93,9 @@ public class BuildServiceImpl implements BuildService {
         build.setProcess(process);
         build.setStarted(LocalDateTime.now());
         builds.put(build.getBuildNumber(), build);
+
+        buildsListController.triggerUpdated(build);
+        buildsListController.triggerRequest(listBuildRequests());
     }
 
     private boolean hasActiveBuildTask(final Long jobId) {
@@ -109,6 +118,8 @@ public class BuildServiceImpl implements BuildService {
             LOGGER.info("Starte Build für Job [{}] aus Warteschlange.", job.getName());
             startBuild(job);
         }
+        buildsListController.triggerFinished(build);
+        buildsListController.triggerRequest(listBuildRequests());
     }
 
     private void saveBuild(final Build build, final boolean taskStopped) {
@@ -116,6 +127,7 @@ public class BuildServiceImpl implements BuildService {
         history.setFinished(LocalDateTime.now());
         history.setResult(taskStopped ? 1 : 0);
         dataService.save(history);
+        buildsListController.triggerHistory(listBuildHistory());
     }
 
     @Override
@@ -147,6 +159,11 @@ public class BuildServiceImpl implements BuildService {
     public String getOutput(final Long buildNumber) {
         final Build build = builds.get(buildNumber);
         return build == null ? "finished" : build.getExecutionOutput().toString();
+    }
+
+    @Override
+    public BuildsListController getBuildsListController() {
+        return buildsListController;
     }
 
 }

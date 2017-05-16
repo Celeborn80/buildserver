@@ -1,4 +1,4 @@
-package de.data_team.build;
+package de.data_team.build.model;
 
 import java.io.File;
 import java.io.IOException;

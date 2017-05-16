@@ -6,6 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -49,6 +50,7 @@ public class BuildHistory {
     private LocalDateTime started;
 
     @Column(name = "output")
+    @Lob
     private String output;
 
     @JsonFormat(pattern = "dd.MM.yyyy HH:mm")

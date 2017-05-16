@@ -1,4 +1,4 @@
-package de.data_team.build;
+package de.data_team.build.controller;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import de.data_team.build.model.Build;
 import de.data_team.build.model.BuildHistory;
 import de.data_team.build.model.Job;
+import de.data_team.build.service.BuildService;
 
 @RestController()
 @RequestMapping()

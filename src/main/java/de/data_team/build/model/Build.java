@@ -6,8 +6,9 @@ import java.util.concurrent.Future;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-import de.data_team.build.BuildTask;
+import de.data_team.build.service.BuildTask;
 import lombok.Data;
 import lombok.ToString;
 
@@ -40,6 +41,11 @@ public class Build {
     @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
     public LocalDateTime getStarted() {
         return started;
+    }
+
+    @JsonProperty
+    public String getCurrentExecutionOutput() {
+        return executionOutput.toString();
     }
 
     public void finish() {
